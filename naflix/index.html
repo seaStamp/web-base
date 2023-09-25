@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAFLIX</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;700&display=swap');
+
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .main {
+            color: white;
+
+            background-image: url('https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABWwoKGCRUPMiNcNGgrdBpyu0RP8XoHT-UQeQfUTq6Fw35yct8grG_NKiEQKSXKIGiWqGfGVwo9dy3UGEX7JIbBCGboR4oW_X9c3l.jpg?r=b59');
+            background-position: center;
+            background-size: cover;
+        }
+
+        body {
+            background-color: black;
+        }
+
+        .mycards {
+            width: 1200px;
+            margin: 20px auto;
+        }
+
+        .mypostingbox {
+            width: 500px;
+            margin: 30px auto 20px auto;
+            padding: 20px;
+
+            box-shadow: 0px 0px 3px 0px gray;
+            border: 1px solid white;
+            border-radius: 8px;
+        }
+
+        .form-floating>input {
+            background-color: transparent;
+            color: white;
+        }
+
+        .form-floating>label {
+            color: white;
+        }
+
+        .input-group>label {
+            background-color: transparent;
+            color: white;
+        }
+
+        .mypostingbox>button {
+            width: 100%;
+        }
+
+        .logo {
+            font-family: 'Black Han Sans', sans-serif;
+            font-size: 20px
+        }
+    </style>
+    <script>
+
+        /* 자료형, 기본연산, 변수선언에 대한 기초
+        let a = ['사과', '배', '수박'];
+
+        console.log(a[0]);
+        console.log(a.length);
+
+        let person = {'name':'jean', 'age':29, 'height':195}
+        let name = person['name'];
+        name = 'bauer'
+        let age = person['age'];
+        console.log("person의 키는 :",person['height']);
+        console.log(name, age, person['height'],"어디까지 이어지는거예요?");
+        console.log(person);
+        */
+
+        /* 조건문과 반복문 
+        let age = 19;
+
+
+        let ages = [10, 12, 15, 18, 40, 29];
+
+        ages.forEach(a => {
+            if (a < 20) {
+                console.log("청소년입니다");
+            } else {
+                console.log("성인입니다")
+            }
+        });
+        */
+
+        function hey() {
+            $('#title').text('쥬라기 월드');
+        }
+
+    </script>
+</head>
+
+<body>
+    <header class="p-3 text-bg-dark">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                        <use xlink:href="#bootstrap"></use>
+                    </svg>
+                </a>
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="#" class="nav-link px-2 text-danger"><span class="logo">NAFLIX</span></a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">홈</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">시리즈</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">영화</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">내가 찜한 콘텐츠</a></li>
+                </ul>
+
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+                    <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..."
+                        aria-label="Search">
+                </form>
+
+                <div class="text-end">
+                    <button type="button" class="btn btn-outline-light me-2">Login</button>
+                    <button type="button" class="btn btn-danger">Sign-up</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="main">
+        <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+            <div class="container-fluid py-5">
+                <h1 id="title" class="display-5 fw-bold">쥬라기 공원</h1>
+                <p class="col-md-8 fs-4">살아있는 온갖 공룡이 모인 쥬라기 공원. 개장을 앞두고 시찰단을 맞이하지만 산업 스파이로 인해 보안 시스템이 마비된다. 그 순간
+                    티라노사우루스가 우리 밖으로 나와 사냥을 개시하니. 공룡이 들끓는 섬에서 살아남기 위한 사투가 시작된다.</p>
+                <button onclick="hey()" type="button" class="btn btn-outline-light">영화 기록하기</button>
+                <button type="button" class="btn btn-outline-light">상세정보</button>
+
+            </div>
+        </div>
+    </div>
+    <div class="mypostingbox">
+        <div class="form-floating mb-3">
+            <input class="form-control" id="floatingInput" placeholder="영화 이미지 주소">
+            <label for="floatingInput">영화 이미지 주소</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input class="form-control" id="floatingInput" placeholder="영화 제목">
+            <label for="floatingInput">영화 제목</label>
+        </div>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">별점</label>
+            <select class="form-select" id="inputGroupSelect01">
+                <option selected>별점 선택</option>
+                <option value="1">⭐</option>
+                <option value="2">⭐⭐</option>
+                <option value="3">⭐⭐⭐</option>
+                <option value="4">⭐⭐⭐⭐</option>
+                <option value="5">⭐⭐⭐⭐⭐</option>
+            </select>
+        </div>
+        <div class="form-floating mb-3">
+            <input class="form-control" id="floatingInput" placeholder="영화 이미지 주소">
+            <label for="floatingInput">추천 이유</label>
+        </div>
+        <button type="button" class="btn btn-danger">기록하기</button>
+
+    </div>
+    <div class="mycards">
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://i.namu.wiki/i/7gFDPnyB23IA6ZLfsjopkeqMtPJ1ec6SPiXJlp55E1K3TO7fgOxvCa3UhXHJjTbaJhtm9YmKj9EvaaCQx3Ve_l6Hg6jMgA3i0sVuyOw8d_ZNmtSEX9LanzCTX3d_9SBi5Jydzee3VRcog85TH_6D2A.webp"
+                        class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">영화제목</h5>
+                        <p class="card-text">⭐⭐⭐</p>
+                        <p class="card-text">영화 코멘트</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://i.namu.wiki/i/dEmxtJj0JKJqYA-D2S0J-PDPgjX15T1_NqUAhxWn1wSUXlREuoqX1ph_Wjni_bCDKGcVGLuJvHmEB87cLrk_GMlfWJU7WollFyZjzh0utq4gNJ4dOfLExOuW7FG-9qsLS1CCHXwVJq1a1mzFJ6ZSPw.webp"
+                        class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">영화제목</h5>
+                        <p class="card-text">⭐⭐⭐</p>
+                        <p class="card-text">영화 코멘트</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://i.namu.wiki/i/oD6wcUKXzvL8zkQOhquvr60kuv_cncG3UNwFqwcHvlRzSgYrHVRGxET1-XyHAoA5MmJlvygixOsGm7LbLBT5noz_jd7ET4vIGiiellh_3kTX8PtAY5sPQmYQHzYk2OuBO9JdCUMpbuDanJOWR8tYDg.webp"
+                        class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">영화제목</h5>
+                        <p class="card-text">⭐⭐⭐</p>
+                        <p class="card-text">영화 코멘트</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://mblogthumb-phinf.pstatic.net/MjAyMDA3MjhfMTI3/MDAxNTk1OTQ0NzM3ODEy.jVyKPuHgH0LRvJqrP0l1ciDiNlGWBQ5AEF4Zn-yQ3r8g.8GJaQAgFLF7Ks_NhVtYVWyE4no_bCW0uusI4opJ02Eog.JPEG.dr_trex/JWCC_S1_Vertical_Main_RGB_PRE.jpg?type=w800"
+                        class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">영화제목</h5>
+                        <p class="card-text">⭐⭐⭐</p>
+                        <p class="card-text">영화 코멘트</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
