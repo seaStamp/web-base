@@ -65,41 +65,114 @@
             font-size: 20px
         }
     </style>
-    <script>
-
-        /* 자료형, 기본연산, 변수선언에 대한 기초
-        let a = ['사과', '배', '수박'];
-
-        console.log(a[0]);
-        console.log(a.length);
-
-        let person = {'name':'jean', 'age':29, 'height':195}
-        let name = person['name'];
-        name = 'bauer'
-        let age = person['age'];
-        console.log("person의 키는 :",person['height']);
-        console.log(name, age, person['height'],"어디까지 이어지는거예요?");
-        console.log(person);
-        */
-
-        /* 조건문과 반복문 
-        let age = 19;
+    <script type="module">
+        // Firebase SDK 라이브러리 가져오기
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
 
-        let ages = [10, 12, 15, 18, 40, 29];
+        // Firebase 구성 정보 설정
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyCQWOLnetEJUEkKyWXdQ8oECGrkVIRlG1I",
+            authDomain: "web-base-fe24b.firebaseapp.com",
+            projectId: "web-base-fe24b",
+            storageBucket: "web-base-fe24b.appspot.com",
+            messagingSenderId: "262597360342",
+            appId: "1:262597360342:web:b0465af0f902babe07a777",
+            measurementId: "G-E3X5W2K0HB"
+        };
 
-        ages.forEach(a => {
-            if (a < 20) {
-                console.log("청소년입니다");
-            } else {
-                console.log("성인입니다")
+
+        // Firebase 인스턴스 초기화
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        //토글 숨긴상태에서 로딩되도록
+        $('#postingbox').toggle();
+
+        // 영화 데이터 값 입력받아 딕셔너리로 firebase에 저장
+        $("#postingbtn").click(async function () {
+            let img = $('#img').val();
+            let title = $('#title').val();
+            let grade = $('#grade').val();
+            let comment = $('#comment').val();
+
+            let doc = {
+                'image': img,
+                'title': title,
+                'grade': grade,
+                'comment': comment
             }
-        });
-        */
 
-        function hey() {
-            $('#title').text('쥬라기 월드');
-        }
+            //movies란 컬렉션으로 저장
+            await addDoc(collection(db, "movies"), doc);
+            alert('저장 완료!');
+            window.location.reload();
+
+        })
+
+        //toggle 버튼
+        $("#savebtn").click(async function () {
+            $('#postingbox').toggle();
+        })
+
+        //firebase에서 movies 콜렉션 가져와서 출력하기
+        let docs = await getDocs(collection(db, "movies"));
+        docs.forEach((doc) => {
+            let row = doc.data();
+            console.log(row);
+
+            let image = row['image'];
+            let title = row['title'];
+            let grade = row['grade'];
+            let comment = row['comment'];
+            let star;
+
+            switch (grade) {
+                case '1': star = '⭐';
+                    break;
+                case '2': star = '⭐⭐'
+                    break;
+                case '3': star = '⭐⭐⭐'
+                    break;
+                case '4': star = '⭐⭐⭐⭐'
+                    break;
+                case '5': star = '⭐⭐⭐⭐⭐'
+                    break;
+                default: break;
+            }
+
+            let temp_html = `
+            <div class="col">
+                <div class="card h-100">
+                    <img src="${image}"
+                        class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">${title}</h5>
+                        <p class="card-text">${star}</p>
+                        <p class="card-text">${comment}</p>
+                    </div>
+                </div>
+            </div>`;
+
+            $('#card').append(temp_html);
+        });
+
+        // 온도 api 적용
+        let url = "http://spartacodingclub.shop/sparta_api/weather/seoul"
+        fetch(url).then(res => res.json()).then(data => {
+            let temp = data['temp'];
+            if (temp >= 20) {
+                $('#temperature').text('더워요');
+            } else {
+                $('#temperature').text('추워요');
+            }
+        })
+
+
 
     </script>
 </head>
@@ -120,6 +193,7 @@
                     <li><a href="#" class="nav-link px-2 text-white">시리즈</a></li>
                     <li><a href="#" class="nav-link px-2 text-white">영화</a></li>
                     <li><a href="#" class="nav-link px-2 text-white">내가 찜한 콘텐츠</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">서울의 현재 날씨 : <sapn id="temperature"></sapn></a></li>
                 </ul>
 
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
@@ -137,27 +211,27 @@
     <div class="main">
         <div class="p-5 mb-4 bg-body-tertiary rounded-3">
             <div class="container-fluid py-5">
-                <h1 id="title" class="display-5 fw-bold">쥬라기 공원</h1>
+                <h1 class="display-5 fw-bold">쥬라기 공원</h1>
                 <p class="col-md-8 fs-4">살아있는 온갖 공룡이 모인 쥬라기 공원. 개장을 앞두고 시찰단을 맞이하지만 산업 스파이로 인해 보안 시스템이 마비된다. 그 순간
                     티라노사우루스가 우리 밖으로 나와 사냥을 개시하니. 공룡이 들끓는 섬에서 살아남기 위한 사투가 시작된다.</p>
-                <button onclick="hey()" type="button" class="btn btn-outline-light">영화 기록하기</button>
+                <button id="savebtn" type="button" class="btn btn-outline-light">영화 기록하기</button>
                 <button type="button" class="btn btn-outline-light">상세정보</button>
 
             </div>
         </div>
     </div>
-    <div class="mypostingbox">
+    <div class="mypostingbox" id="postingbox">
         <div class="form-floating mb-3">
-            <input class="form-control" id="floatingInput" placeholder="영화 이미지 주소">
-            <label for="floatingInput">영화 이미지 주소</label>
+            <input class="form-control" id="img" placeholder="영화 이미지 주소">
+            <label for="img">영화 이미지 주소</label>
         </div>
         <div class="form-floating mb-3">
-            <input class="form-control" id="floatingInput" placeholder="영화 제목">
+            <input class="form-control" id="title" placeholder="영화 제목">
             <label for="floatingInput">영화 제목</label>
         </div>
         <div class="input-group mb-3">
             <label class="input-group-text" for="inputGroupSelect01">별점</label>
-            <select class="form-select" id="inputGroupSelect01">
+            <select class="form-select" id="grade">
                 <option selected>별점 선택</option>
                 <option value="1">⭐</option>
                 <option value="2">⭐⭐</option>
@@ -167,58 +241,15 @@
             </select>
         </div>
         <div class="form-floating mb-3">
-            <input class="form-control" id="floatingInput" placeholder="영화 이미지 주소">
+            <input class="form-control" id="comment" placeholder="영화 이미지 주소">
             <label for="floatingInput">추천 이유</label>
         </div>
-        <button type="button" class="btn btn-danger">기록하기</button>
+        <button id="postingbtn" type="button" class="btn btn-danger">기록하기</button>
 
     </div>
     <div class="mycards">
-        <div class="row row-cols-1 row-cols-md-4 g-4">
-            <div class="col">
-                <div class="card h-100">
-                    <img src="https://i.namu.wiki/i/7gFDPnyB23IA6ZLfsjopkeqMtPJ1ec6SPiXJlp55E1K3TO7fgOxvCa3UhXHJjTbaJhtm9YmKj9EvaaCQx3Ve_l6Hg6jMgA3i0sVuyOw8d_ZNmtSEX9LanzCTX3d_9SBi5Jydzee3VRcog85TH_6D2A.webp"
-                        class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">영화제목</h5>
-                        <p class="card-text">⭐⭐⭐</p>
-                        <p class="card-text">영화 코멘트</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <img src="https://i.namu.wiki/i/dEmxtJj0JKJqYA-D2S0J-PDPgjX15T1_NqUAhxWn1wSUXlREuoqX1ph_Wjni_bCDKGcVGLuJvHmEB87cLrk_GMlfWJU7WollFyZjzh0utq4gNJ4dOfLExOuW7FG-9qsLS1CCHXwVJq1a1mzFJ6ZSPw.webp"
-                        class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">영화제목</h5>
-                        <p class="card-text">⭐⭐⭐</p>
-                        <p class="card-text">영화 코멘트</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <img src="https://i.namu.wiki/i/oD6wcUKXzvL8zkQOhquvr60kuv_cncG3UNwFqwcHvlRzSgYrHVRGxET1-XyHAoA5MmJlvygixOsGm7LbLBT5noz_jd7ET4vIGiiellh_3kTX8PtAY5sPQmYQHzYk2OuBO9JdCUMpbuDanJOWR8tYDg.webp"
-                        class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">영화제목</h5>
-                        <p class="card-text">⭐⭐⭐</p>
-                        <p class="card-text">영화 코멘트</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <img src="https://mblogthumb-phinf.pstatic.net/MjAyMDA3MjhfMTI3/MDAxNTk1OTQ0NzM3ODEy.jVyKPuHgH0LRvJqrP0l1ciDiNlGWBQ5AEF4Zn-yQ3r8g.8GJaQAgFLF7Ks_NhVtYVWyE4no_bCW0uusI4opJ02Eog.JPEG.dr_trex/JWCC_S1_Vertical_Main_RGB_PRE.jpg?type=w800"
-                        class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">영화제목</h5>
-                        <p class="card-text">⭐⭐⭐</p>
-                        <p class="card-text">영화 코멘트</p>
-                    </div>
-                </div>
-            </div>
+        <div id="card" class="row row-cols-1 row-cols-md-4 g-4">
+            
         </div>
     </div>
 </body>

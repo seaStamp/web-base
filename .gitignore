@@ -1,3 +1,4 @@
 *.idea
 *.iml
 notion주소.txt
+.DS_Store
