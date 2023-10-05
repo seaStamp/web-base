@@ -2,3 +2,5 @@
 *.iml
 notion주소.txt
 .DS_Store
+*.pdf
+*.zip
